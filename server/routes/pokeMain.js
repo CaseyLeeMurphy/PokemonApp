@@ -1,7 +1,7 @@
 // ----------------------------------- Neccessary modules ----------------------------------------
-const studentData = require('../data/pokemonMongoDao');
 const express = require('express');
 const Pokedex = require('pokedex-promise-v2');
+const pokemonList = require('../data/pokemonList.json');
 
 // var options = {
 //   protocol: 'http',
@@ -35,6 +35,10 @@ router.get("/api/v1/pokemon/:id", function(req, res) {
     .catch(function(error) {
       res.status(500).send(error);
     });
+});
+
+router.get("/api/v1/pokemon", function(req, res) {
+    res.status(201).send(pokemonList);
 });
 
 // --------------------------------------- Update/Put ---------------------------------------------

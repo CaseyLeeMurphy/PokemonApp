@@ -19,28 +19,52 @@
             </div>
         </md-toolbar>
 
-        <md-input-container> 
-            <label>Pokemon Name or ID</label>
-            <input type="text" ng-model="pokemonID" ></input>
-            <md-button ng-click="getPokemonDetails(pokemonID)" >Submit</md-button>
-        </md-input-container>
+        <form ng-submit="getPokemonDetails(pokemonID)">
+            <div layout="row" layout-align="start start">
+                <md-autocomplete 
+                    md-selected-item="selectedPokemon" 
+                    md-search-text="selectedPokemonText" 
+                    md-items="pokemon in getMatches(selectedPokemonText)" 
+                    md-item-text="pokemon"
+                    placeholder="Enter pokemon name or ID">
+                    <span>{{pokemon}}</span>
+                </md-autocomplete>
+                <md-button type="submit" style="margin-top: 1em">Lookup</md-button>
+            </div>
+        </form>
         
-        <!--<pre>{{pokemonDetails | json}}</pre>-->
+        <!--<pre>{{pokemonNames | json}}</pre>-->
 
         <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" md-theme-watch>
-        <md-card-title>
-          <md-card-title-text>
-            <span class="md-headline">{{stagedPokemon.name | uppercase}}</span>
-            <!--<span class="md-subhead">Large</span>-->
-          </md-card-title-text>
-          <md-card-title-media>
-            <div class="md-media-lg card-media"></div>
-          </md-card-title-media>
-        </md-card-title>
-        <md-card-actions layout="row" layout-align="end center">
-          <md-button >Add to Party</md-button>
-        </md-card-actions>
-      </md-card>
+            <md-card-title>
+            <md-card-title-text>
+                <span class="md-headline">{{stagedPokemon.name | uppercase}}</span>
+                <!--<span class="md-subhead">Large</span>-->
+            </md-card-title-text>
+            <md-card-title-media>
+                <div class="md-media-lg card-media"></div>
+            </md-card-title-media>
+            </md-card-title>
+            <md-card-actions layout="row" layout-align="end center">
+            <md-button ng-click="addToParty(stagedPokemon)">Add to Party</md-button>
+            </md-card-actions>
+        </md-card>
+
+        <h2> My Team </h2>
+        <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" md-theme-watch ng-repeat="pokemon in teamMembers track by $index">
+            <md-card-title>
+            <md-card-title-text>
+                <span class="md-headline">{{pokemon.name | uppercase}}</span>
+                <!--<span class="md-subhead">Large</span>-->
+            </md-card-title-text>
+            <md-card-title-media>
+                <div class="md-media-lg card-media"></div>
+            </md-card-title-media>
+            </md-card-title>
+            <md-card-actions layout="row" layout-align="end center">
+            <md-button ng-click="removeFromParty($index)">Remove From Party</md-button>
+            </md-card-actions>
+        </md-card>
     </div>
 
 <!-- Angular Scripts-->
