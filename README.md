@@ -18,7 +18,7 @@ Step 5: Type "npm start" to boot up the app.
 
 All done! The server will display to the console that it is listening. Head to your browser and type "localhost:3000" in the URL. It should look like this:
 
-![](https://github.com/CaseyLeeMurphy/cs4690/blob/master/indexPage.png)
+TODO
 ## API Reference
 
 Please head to the following link for an API Reference guide:
