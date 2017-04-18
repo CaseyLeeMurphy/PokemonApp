@@ -1,6 +1,18 @@
 // ----------------------------------- Neccessary modules ----------------------------------------
-const studentData = require('../data/studentsMongoDao');
+const studentData = require('../data/pokemonMongoDao');
 const express = require('express');
+const Pokedex = require('pokedex-promise-v2');
+
+// var options = {
+//   protocol: 'http',
+//   hostName: 'pokeapi.co',
+//   versionPath: '/api/v2/',
+//   cacheLimit: 100 * 1000, // 100s
+//   tiemout: 5 * 1000 // 5s
+// }
+// const P = new Pokedex(options);
+
+const P = new Pokedex();
 var router = express.Router();
 module.exports = router;
 
@@ -22,15 +34,15 @@ router.post("/api/v1/students", function (req, res) {
 
 // ---------------------------------------- Get ---------------------------------------------------
 // ------------------------------------------------------------------------------------------------
-router.get("/api/v1/students/:id", function(req, res) {
+router.get("/api/v1/pokemon/:id", function(req, res) {
     var id = req.params.id;
 
-    studentData.read(id, (err, result) => {
-        if (err) {
-            res.status(500).send("There was a problem reading that ID from the database");
-        } else {
-            res.status(201).send(result);
-        }    
+    P.getPokemonByName(id)
+    .then(function(response) {
+      res.status(201).send(response);
+    })
+    .catch(function(error) {
+      res.status(500).send(error);
     });
 });
 

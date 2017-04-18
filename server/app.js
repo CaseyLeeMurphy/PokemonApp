@@ -19,47 +19,47 @@ const winston = require('winston');
 
 // ----------------------------------- Load Routes  -----------------------------------------------
 // ------------------------------------------------------------------------------------------------
-const studentData = require('./routes/studentData');
+const pokeMain = require('./routes/pokeMain');
 
 // ----------------------------------- Testing New NPM Package ------------------------------------
 // ------------------------------------------------------------------------------------------------
-console.log('SOOOOMEEWHERE OVER THE RAINBOWWWW!'.rainbow);
+// console.log('SOOOOMEEWHERE OVER THE RAINBOWWWW!'.rainbow);
 
-nconf.argv()
-   .env()
-   .file({ file: 'path/to/config.json' });
+// nconf.argv()
+//    .env()
+//    .file({ file: 'path/to/config.json' });
  
-// 
-// Set a few variables on `nconf`. 
-// 
-nconf.set('testVariable', 'My name is ')
-nconf.set('database:host', '127.0.0.1');
-nconf.set('database:port', 5984);
+// // 
+// // Set a few variables on `nconf`. 
+// // 
+// nconf.set('testVariable', 'My name is ')
+// nconf.set('database:host', '127.0.0.1');
+// nconf.set('database:port', 5984);
 
-// 
-// Get the entire database object from nconf. This will output 
-// { host: '127.0.0.1', port: 5984 } 
-// 
-console.log('foo: ' + nconf.get('foo'));
-console.log('NODE_ENV: ' + nconf.get('NODE_ENV'));
-console.log('database: ' + nconf.get('database:host'));
+// // 
+// // Get the entire database object from nconf. This will output 
+// // { host: '127.0.0.1', port: 5984 } 
+// // 
+// console.log('foo: ' + nconf.get('foo'));
+// console.log('NODE_ENV: ' + nconf.get('NODE_ENV'));
+// console.log('database: ' + nconf.get('database:host'));
  
-winston.log('info', 'Hello distributed log files!');
-winston.info('Hello again distributed logs');
+// winston.log('info', 'Hello distributed log files!');
+// winston.info('Hello again distributed logs');
 
-winston.level = 'debug';
-winston.log('debug','Now my debug messages are written to console');
+// winston.level = 'debug';
+// winston.log('debug','Now my debug messages are written to console');
 
-var testWinstonLogger = new (winston.Logger)({
-    transports: [
-      new (winston.transports.Console)(),
-      new (winston.transports.File)({ filename: 'winstonLog.log' })
-    ]
-  });
+// var testWinstonLogger = new (winston.Logger)({
+//     transports: [
+//       new (winston.transports.Console)(),
+//       new (winston.transports.File)({ filename: 'winstonLog.log' })
+//     ]
+//   });
 
-testWinstonLogger.log('debug', 'Where does this one end up');
-testWinstonLogger.info('Testing out the info for the new logger');
-testWinstonLogger.info('Looks like these go out to the file aaaand the console');
+// testWinstonLogger.log('debug', 'Where does this one end up');
+// testWinstonLogger.info('Testing out the info for the new logger');
+// testWinstonLogger.info('Looks like these go out to the file aaaand the console');
 
 
 // ----------------------------------- create express app -----------------------------------------
@@ -73,7 +73,7 @@ app.use(compression());
 app.use(favicon(WEB + '/img/uvuFavicon.png'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
-app.use(studentData);
+app.use(pokeMain);
 
 // ----------------------------------- traditional webserver stuff for serving static files -------
 // ------------------------------------------------------------------------------------------------
