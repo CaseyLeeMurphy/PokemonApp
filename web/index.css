@@ -1,7 +1,18 @@
-h2{
-  margin: 10px;
+h2 {
+    margin: 10px;
+}
+
+h3 {
+    margin: 15px 5px 10px 10px;
 }
 
 md-autocomplete {
     margin: 10px;
+}
+
+.type-button {
+    margin-left: 5px;
+    margin-top: 4px;
+    max-height: 14px;
+
 }
