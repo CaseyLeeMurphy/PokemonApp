@@ -8,7 +8,12 @@
     <!-- CSS  -->
     <link rel="stylesheet" href="bower_components/angular-material/angular-material.css">
     <link rel="stylesheet" href="index.css">
+
+    <!-- FAVICON -->
     <link rel="icon" type="image/png"  href="img/uvuFavicon.png" sizes="32x32">
+
+    <!-- ICON LIBRARY -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body ng-app="pokemonApp" ng-controller="pokeMainController">
     <div layout="column" layout-fill>
@@ -19,9 +24,9 @@
             </div>
         </md-toolbar>
 
-        <form ng-submit="getPokemonDetails(pokemonID)">
+        <form ng-submit="getPokemonDetails(selectedPokemon)">
             <div layout="row" layout-align="start start">
-                <md-autocomplete 
+                <md-autocomplete class="autocomplete"
                     md-selected-item="selectedPokemon" 
                     md-search-text="searchText" 
                     md-items="pokemon in getMatches(searchText)" 
@@ -29,26 +34,29 @@
                     placeholder="Enter pokemon name or ID">
                     <span>{{pokemon}}</span>
                 </md-autocomplete>
-                <md-button type="submit" style="margin-top: 1em">Lookup</md-button>
+                <md-button type="submit" style="margin-top: 16px">Lookup</md-button>
             </div>
         </form>
         
-        <!--<pre>{{pokemonNames | json}}</pre>-->
+        <!--<pre>{{ stagedPokemon.sprites | json }}</pre>-->
 
-        <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" md-theme-watch>
-            <md-card-title>
-            <md-card-title-text>
-                <span class="md-headline">{{stagedPokemon.name | uppercase}}</span>
-                <!--<span class="md-subhead">Large</span>-->
-            </md-card-title-text>
-            <md-card-title-media>
-                <div class="md-media-lg card-media"></div>
-            </md-card-title-media>
-            </md-card-title>
-            <md-card-actions layout="row" layout-align="end center">
-            <md-button ng-click="addToParty(stagedPokemon)">Add to Party</md-button>
-            </md-card-actions>
-        </md-card>
+        <div ng-show="stagedPokemon" layout="row">
+            <md-card style="min-width: 350px; min-height: 200px">
+                <md-card-title>
+                <md-card-title-text>
+                    <span class="md-headline">{{stagedPokemon.name | uppercase}}</span>
+                    <!--<span class="md-subhead">Large</span>-->
+                </md-card-title-text>
+                <md-card-title-media>
+                    <img src='{{stagedPokemon.sprites.front_default}}'>
+                </md-card-title-media>
+                </md-card-title>
+                <md-card-actions layout="row" layout-align="end center">
+                    <md-button ng-click="showDetails($event, stagedPokemon, false)">Details</md-button>
+                    <md-button ng-click="addToParty(stagedPokemon)">Add to Party</md-button>
+                </md-card-actions>
+            </md-card>
+        </div>
 
         <h2> My Team </h2>
         <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" md-theme-watch ng-repeat="pokemon in teamMembers track by $index">
@@ -58,11 +66,12 @@
                 <!--<span class="md-subhead">Large</span>-->
             </md-card-title-text>
             <md-card-title-media>
-                <div class="md-media-lg card-media"></div>
+                <img src='{{pokemon.sprites.front_default}}'>
             </md-card-title-media>
             </md-card-title>
             <md-card-actions layout="row" layout-align="end center">
-            <md-button ng-click="removeFromParty($index)">Remove From Party</md-button>
+                <md-button ng-click="showDetails($event, pokemon, true, $index)">Details</md-button>
+                <md-button ng-click="removeFromParty($index)">Remove From Party</md-button>
             </md-card-actions>
         </md-card>
     </div>
@@ -72,6 +81,7 @@
 <script src="bower_components/angular-animate/angular-animate.js"></script>
 <script src="bower_components/angular-aria/angular-aria.js"></script>
 <script src="bower_components/angular-messages/angular-messages.js"></script>
+<script src="bower_components/chart.js/dist/Chart.js"></script>
 
 <!-- Angular Material Scripts -->
 <script src="bower_components/angular-material/angular-material.js"></script>
