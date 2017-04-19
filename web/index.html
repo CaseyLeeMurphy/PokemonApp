@@ -23,8 +23,8 @@
             <div layout="row" layout-align="start start">
                 <md-autocomplete 
                     md-selected-item="selectedPokemon" 
-                    md-search-text="selectedPokemonText" 
-                    md-items="pokemon in getMatches(selectedPokemonText)" 
+                    md-search-text="searchText" 
+                    md-items="pokemon in getMatches(searchText)" 
                     md-item-text="pokemon"
                     placeholder="Enter pokemon name or ID">
                     <span>{{pokemon}}</span>
