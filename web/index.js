@@ -17,30 +17,6 @@ app.controller('pokeMainController', function($scope, $http, $mdDialog){
             });
 
             $scope.stagedPokemon = pokemon;
-
-            let ctx = document.getElementById('stats-chart');
-            let statsChart = new Chart(ctx, {
-                type: 'radar',
-                data: {
-                    labels: $scope.stagedPokemon.stats.map((singleStat) => {
-                        return singleStat.stat.name;
-                    }),
-                    datasets: [
-                        {
-                            label: "Pokemon Stats",
-                            backgroundColor: "rgba(179,181,198,0.2)",
-                            borderColor: "rgba(179,181,198,1)",
-                            pointBackgroundColor: "rgba(179,181,198,1)",
-                            pointBorderColor: "#fff",
-                            pointHoverBackgroundColor: "#fff",
-                            pointHoverBorderColor: "rgba(179,181,198,1)",
-                            data: $scope.stagedPokemon.stats.map((singleStat) => {
-                                return singleStat.base_stat;
-                            })
-                        }
-                    ]
-                }
-            });
         },function(err) {
             console.log('There was an error: ' + err);
         })
@@ -90,12 +66,45 @@ app.controller('pokeMainController', function($scope, $http, $mdDialog){
             };
         }
 
+        function showStatsChart() {
+            let ctx = document.getElementById('stats-chart');
+            let statsLabels = pokemon.stats.map((singleStat) => (singleStat.stat.name));
+            let statsData = pokemon.stats.map((singleStat) => (singleStat.base_stat));
+            let statsChart = new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: statsLabels,
+                    datasets: [
+                        {
+                            label: "Pokemon Stats",
+                            backgroundColor: "rgba(179,181,198,0.2)",
+                            borderColor: "rgba(179,181,198,1)",
+                            pointBackgroundColor: "rgba(179,181,198,1)",
+                            pointBorderColor: "#fff",
+                            pointHoverBackgroundColor: "#fff",
+                            pointHoverBorderColor: "rgba(179,181,198,1)",
+                            data: statsData
+                        }
+                    ]
+                },
+                options: {
+                    scale: {
+                        ticks: {
+                            beginAtZero: true,
+                            max:255
+                        }
+                    }
+                }
+            });
+        }
+
         $mdDialog.show({
             controller: DetailsDialogController,
             templateUrl: 'details.tmpl.html',
             parent: angular.element(document.body),
             targetEvent: event,
-            clickOutsideToClose:true
+            clickOutsideToClose:true,
+            onComplete: showStatsChart
         }).then(function(answer) {
             if (answer.add === true)
                 $scope.addToParty(answer.pokemon);
