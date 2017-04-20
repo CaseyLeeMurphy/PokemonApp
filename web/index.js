@@ -57,12 +57,26 @@ app.controller('pokeMainController', function($scope, $http, $mdDialog, $mdToast
             $scope.inParty = inParty;
             $scope.index = index;
 
+            // Pull out the pokemon type information
             $scope.type1 = pokemon.types.find(t => t.slot === 1).type.name;
             let type2 = pokemon.types.find(t => t.slot === 2);
             $scope.type2 = type2 ? type2.type.name : null;
 
+            // Get style for pokemon type
             $scope.type1Style = { backgroundColor: PokeTypes.colors[$scope.type1], color: 'black'};
             $scope.type2Style = { backgroundColor: type2 ? PokeTypes.colors[$scope.type2] : null, color: 'black'};
+            
+            // Get weaknesses
+            let strengthAndWeaknesses = PokeTypes.getWeaknessList($scope.type1, $scope.type2);
+            $scope.weaknesses = Object.keys(strengthAndWeaknesses)
+                .filter((key) => strengthAndWeaknesses[key] === "weak")
+                .map(key => ({
+                    type: key, 
+                    style: {
+                        backgroundColor: PokeTypes.colors[key], 
+                        color: 'black'
+                    }
+                }));
 
             $scope.hide = function() {
                 $mdDialog.hide();
