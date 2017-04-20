@@ -3,35 +3,43 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
-    <title>Student Data</title>
+    <title>You've Gotten Lost</title>
 
     <!-- CSS  -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-    <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link rel="stylesheet" href="bower_components/angular-material/angular-material.css">
     <link rel="stylesheet" href="index.css">
-    <link rel="icon" type="image/png"  href="img/uvuFavicon.png" sizes="32x32">
+
+    <!-- ICON LIBRARY -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
-<body ng-app="app" ng-controller="studentsController">
-<nav class="light-blue lighten-1" role="navigation">
-    <div class="nav-wrapper container"><a id="logo-container" href="/index.html" class="brand-logo">Fun With Tables</a>
-        <ul class="right hide-on-med-and-down">
-            <li><a href="/index.html">Home</a></li>
-        </ul>
-        <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
-    </div>
-</nav>
-<div class="section no-pad-bot" id="index-banner">
-    <div class="container">
-        <h1 class="header center orange-text">Whoopsie...</h1>
-    </div>
-</div>
+<body ng-app="pokemonApp" ng-controller="pokeMainController">
+    <div layout="column">
+        <md-toolbar>
+            <div class="md-toolbar-tools"> 
+                <h2>Pokemon Team Builder</h2>
+                <md-button href="/index.html">Home</md-button>
+            </div>
+        </md-toolbar>
     
-<center>
-    <br>
-    <img src="/img/404Error.png"/>
-    <br><br><br>
-    <a class="waves-effect waves-light btn tooltipped" href="/index.html">Return to Student Data</a>
-</center>
+        <center>
+            <br>
+            <img src="/img/404Error.png"/>
+            <br><br><br>
+            <md-button class="md-raised" href="/index.html">Return Home</md-button>
+        </center>
+    </div>
+
+    <!-- Angular Scripts-->
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-aria/angular-aria.js"></script>
+    <script src="bower_components/angular-messages/angular-messages.js"></script>
+    <script src="bower_components/chart.js/dist/Chart.js"></script>
+
+    <!-- Angular Material Scripts -->
+    <script src="bower_components/angular-material/angular-material.js"></script>
+
+    <!-- Error Script -->
+    <script src="404Error.js"></script>
 </body>
 </html>

@@ -1,6 +1,6 @@
 // ------------------------------ Declare global variables -------------------------------
 // ---------------------------------------------------------------------------------------
-var app = angular.module('pokemonApp', ['ngMaterial']);
+var app = angular.module('pokemonApp', ['ngMaterial', 'ngAnimate']);
 app.controller('pokeMainController', function($scope, $http, $mdDialog, $mdToast){
     $scope.teamMembers = (typeof localStorage.getItem("teamMembers")) === "string" ? JSON.parse(localStorage.getItem("teamMembers")) : [];
     $scope.pokemonNames = [];
@@ -48,7 +48,7 @@ app.controller('pokeMainController', function($scope, $http, $mdDialog, $mdToast
     };
 
     $scope.getMatches = function(searchString) {
-        return $scope.pokemonNames.filter((pokemon) => pokemon.startsWith(searchString));
+        return $scope.pokemonNames.filter((pokemon) => pokemon.toLowerCase().startsWith(searchString));
     };
 
     $scope.showDetails = function(event, pokemon, inParty, index) {
@@ -87,7 +87,7 @@ app.controller('pokeMainController', function($scope, $http, $mdDialog, $mdToast
                     labels: statsLabels,
                     datasets: [
                         {
-                            label: "Pokemon Stats",
+                            label: "Stats",
                             backgroundColor: "rgba(179,181,198,0.2)",
                             borderColor: "rgba(179,181,198,1)",
                             pointBackgroundColor: "rgba(179,181,198,1)",
@@ -100,6 +100,9 @@ app.controller('pokeMainController', function($scope, $http, $mdDialog, $mdToast
                 },
                 backgroundColor:"rgb(0, 204, 0, 0.2)",
                 options: {
+                    legend: {
+                        display:false
+                    },
                     scale: {
                         ticks: {
                             beginAtZero: true,

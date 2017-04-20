@@ -17,7 +17,7 @@
         <md-toolbar>
             <div class="md-toolbar-tools"> 
                 <h2>Pokemon Team Builder</h2>
-                <md-button>Home</md-button>
+                <md-button href="/index.html">Home</md-button>
             </div>
         </md-toolbar>
 
@@ -61,7 +61,7 @@
 
         <h2> My Team </h2>
         <div layout="row" layout-wrap style="margin-left:3em">
-            <md-card 
+            <md-card
                 md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" 
                 flex='90'
                 flex-gt-sm="30"
@@ -70,6 +70,17 @@
                 <md-card-title>
                 <md-card-title-text>
                     <span class="md-headline">{{pokemon.name | uppercase}}</span>
+                    <br></br>
+                    <div layout="row">
+                        <div layout="column" flex="50">
+                            <md-button ng-show="pokemon.move1" >Move1</md-button>
+                            <md-button ng-show="pokemon.move2" >Move2</md-button>
+                        </div>
+                        <div layout="column" flex="50">
+                            <md-button ng-show="pokemon.move3" >Move3</md-button>
+                            <md-button ng-show="pokemon.move4" >Move4</md-button>
+                        </div>
+                    </div>
                     <!--<span class="md-subhead">Large</span>-->
                 </md-card-title-text>
                 <md-card-title-media>
