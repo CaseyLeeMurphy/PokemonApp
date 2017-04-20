@@ -65,20 +65,20 @@
                 md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" 
                 flex='90'
                 flex-gt-sm="30"
-                flex-offset-
-                md-theme-watch ng-repeat="pokemon in teamMembers track by $index">
+                md-theme-watch 
+                ng-repeat="pokemon in teamMembers track by $index">
                 <md-card-title>
                 <md-card-title-text>
                     <span class="md-headline">{{pokemon.name | uppercase}}</span>
                     <br></br>
                     <div layout="row">
                         <div layout="column" flex="50">
-                            <md-button ng-show="pokemon.move1" >Move1</md-button>
-                            <md-button ng-show="pokemon.move2" >Move2</md-button>
+                            <md-button ng-show="pokemon.move1" >{{pokemon.move1}}</md-button>
+                            <md-button ng-show="pokemon.move2" >{{pokemon.move2}}</md-button>
                         </div>
                         <div layout="column" flex="50">
-                            <md-button ng-show="pokemon.move3" >Move3</md-button>
-                            <md-button ng-show="pokemon.move4" >Move4</md-button>
+                            <md-button ng-show="pokemon.move3" >{{pokemon.move3}}</md-button>
+                            <md-button ng-show="pokemon.move4" >{{pokemon.move4}}</md-button>
                         </div>
                     </div>
                     <!--<span class="md-subhead">Large</span>-->
@@ -88,7 +88,7 @@
                 </md-card-title-media>
                 </md-card-title>
                 <md-card-actions layout="row" layout-align="end center">
-                    <md-button ng-click="showDetails($event, pokemon, true, $index)">Details</md-button>
+                    <md-button ng-click="showDetails($event, pokemon, true, $index, teamMembers)">Details</md-button>
                     <md-button ng-click="removeFromParty($index)">Remove From Party</md-button>
                 </md-card-actions>
             </md-card>

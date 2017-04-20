@@ -1,8 +1,18 @@
 // ------------------------------ Declare global variables -------------------------------
 // ---------------------------------------------------------------------------------------
 var app = angular.module('pokemonApp', ['ngMaterial', 'ngAnimate']);
+app.filter('capitalize', function() {
+    return function(input) {
+      return (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
+    }
+});
 app.controller('pokeMainController', function($scope, $http, $mdDialog, $mdToast){
-    $scope.teamMembers = (typeof localStorage.getItem("teamMembers")) === "string" ? JSON.parse(localStorage.getItem("teamMembers")) : [];
+    try {
+        $scope.teamMembers = (typeof localStorage.getItem("teamMembers")) === "string" ? JSON.parse(localStorage.getItem("teamMembers")) : [];
+    } catch (err) {
+        showSimpleToast("There was a problem getting team data from local memory");
+    }
+
     $scope.pokemonNames = [];
     $scope.loadingPokemon = false;
     $scope.MAX_POKEMON = 6;
@@ -51,7 +61,7 @@ app.controller('pokeMainController', function($scope, $http, $mdDialog, $mdToast
         return $scope.pokemonNames.filter((pokemon) => pokemon.toLowerCase().startsWith(searchString));
     };
 
-    $scope.showDetails = function(event, pokemon, inParty, index) {
+    $scope.showDetails = function(event, pokemon, inParty, index, currentParty) {
         function DetailsDialogController($scope, $mdDialog) {
             $scope.pokemon = pokemon;
             $scope.inParty = inParty;
@@ -89,6 +99,14 @@ app.controller('pokeMainController', function($scope, $http, $mdDialog, $mdToast
             $scope.answer = function(answer) {
                 $mdDialog.hide(answer);
             };
+
+            $scope.saveState = function() {
+                localStorage.setItem("teamMembers", JSON.stringify(currentParty));
+            }
+
+            $scope.alert = function(message) {
+                alert(message);
+            }
         }
 
         function showStatsChart() {
