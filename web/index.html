@@ -9,14 +9,11 @@
     <link rel="stylesheet" href="bower_components/angular-material/angular-material.css">
     <link rel="stylesheet" href="index.css">
 
-    <!-- FAVICON -->
-    <link rel="icon" type="image/png"  href="img/uvuFavicon.png" sizes="32x32">
-
     <!-- ICON LIBRARY -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body ng-app="pokemonApp" ng-controller="pokeMainController">
-    <div layout="column" layout-fill>
+    <div layout="column">
         <md-toolbar>
             <div class="md-toolbar-tools"> 
                 <h2>Pokemon Team Builder</h2>
@@ -27,6 +24,7 @@
         <form ng-submit="getPokemonDetails(searchText)">
             <div layout="row" layout-align="start start">
                 <md-autocomplete class="autocomplete"
+                    flex='30'
                     md-selected-item="selectedPokemon" 
                     md-search-text="searchText" 
                     md-items="pokemon in getMatches(searchText)" 
@@ -35,6 +33,9 @@
                     <span>{{pokemon}}</span>
                 </md-autocomplete>
                 <md-button type="submit" style="margin-top: 16px">Lookup</md-button>
+                <div layout="row" layout-sm="column" layout-align="space-around" ng-show="loadingPokemon" style="margin-top:1em">
+                    <md-progress-circular md-mode="indeterminate" ng-disabled="!loadingPokemon" class="md-accent" md-diameter="35"></md-progress-circular>
+                </div>
             </div>
         </form>
         
@@ -59,21 +60,28 @@
         </div>
 
         <h2> My Team </h2>
-        <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" md-theme-watch ng-repeat="pokemon in teamMembers track by $index">
-            <md-card-title>
-            <md-card-title-text>
-                <span class="md-headline">{{pokemon.name | uppercase}}</span>
-                <!--<span class="md-subhead">Large</span>-->
-            </md-card-title-text>
-            <md-card-title-media>
-                <img src='{{pokemon.sprites.front_default}}'>
-            </md-card-title-media>
-            </md-card-title>
-            <md-card-actions layout="row" layout-align="end center">
-                <md-button ng-click="showDetails($event, pokemon, true, $index)">Details</md-button>
-                <md-button ng-click="removeFromParty($index)">Remove From Party</md-button>
-            </md-card-actions>
-        </md-card>
+        <div layout="row" layout-wrap style="margin-left:3em">
+            <md-card 
+                md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" 
+                flex='90'
+                flex-gt-sm="30"
+                flex-offset-
+                md-theme-watch ng-repeat="pokemon in teamMembers track by $index">
+                <md-card-title>
+                <md-card-title-text>
+                    <span class="md-headline">{{pokemon.name | uppercase}}</span>
+                    <!--<span class="md-subhead">Large</span>-->
+                </md-card-title-text>
+                <md-card-title-media>
+                    <img src='{{pokemon.sprites.front_default}}'>
+                </md-card-title-media>
+                </md-card-title>
+                <md-card-actions layout="row" layout-align="end center">
+                    <md-button ng-click="showDetails($event, pokemon, true, $index)">Details</md-button>
+                    <md-button ng-click="removeFromParty($index)">Remove From Party</md-button>
+                </md-card-actions>
+            </md-card>
+        </div>
     </div>
 
 <!-- Angular Scripts-->

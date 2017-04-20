@@ -70,7 +70,7 @@ var app = express();
 // ------------------------------------------------------------------------------------------------
 app.use(logger('dev'));
 app.use(compression());
-app.use(favicon(WEB + '/img/uvuFavicon.png'));
+app.use(favicon(WEB + '/img/greatBall.png'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(pokeMain);

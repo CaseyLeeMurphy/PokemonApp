@@ -1,11 +1,14 @@
 // ------------------------------ Declare global variables -------------------------------
 // ---------------------------------------------------------------------------------------
 var app = angular.module('pokemonApp', ['ngMaterial']);
-app.controller('pokeMainController', function($scope, $http, $mdDialog){
-    $scope.teamMembers = [];
+app.controller('pokeMainController', function($scope, $http, $mdDialog, $mdToast){
+    $scope.teamMembers = (typeof localStorage.getItem("teamMembers")) === "string" ? JSON.parse(localStorage.getItem("teamMembers")) : [];
     $scope.pokemonNames = [];
+    $scope.loadingPokemon = false;
+    $scope.MAX_POKEMON = 6;
     
     $scope.getPokemonDetails = function(pokemonID) {
+        $scope.loadingPokemon = true;
         $http.get('api/v1/pokemon/' + pokemonID.toLowerCase()).then(function(result) {
             let pokemon = result.data;
             let sprites = pokemon.sprites;
@@ -16,9 +19,11 @@ app.controller('pokeMainController', function($scope, $http, $mdDialog){
                     sprites[key] = value.replace('https://raw.githubusercontent.com/PokeAPI/sprites/master/', 'sprites/');
             });
 
+            $scope.loadingPokemon = false;
             $scope.stagedPokemon = pokemon;
         },function(err) {
-            console.log('There was an error: ' + err);
+            showSimpleToast("Please enter a valid pokemon name");
+            $scope.loadingPokemon = false;
         })
     };
 
@@ -29,11 +34,17 @@ app.controller('pokeMainController', function($scope, $http, $mdDialog){
     });
 
     $scope.addToParty = function(pokemonDetails) {
-        $scope.teamMembers.push(JSON.parse(JSON.stringify(pokemonDetails)));
+        if ($scope.teamMembers.length < $scope.MAX_POKEMON) {
+            $scope.teamMembers.push(JSON.parse(JSON.stringify(pokemonDetails)));
+            localStorage.setItem("teamMembers", JSON.stringify($scope.teamMembers));
+        } else {
+            showSimpleToast("You can't have more than 6 pokemon in your team");
+        }
     };
 
     $scope.removeFromParty = function(pokemonIndex) {
         $scope.teamMembers.splice(pokemonIndex, 1);
+        localStorage.setItem("teamMembers", JSON.stringify($scope.teamMembers));
     };
 
     $scope.getMatches = function(searchString) {
@@ -81,11 +92,15 @@ app.controller('pokeMainController', function($scope, $http, $mdDialog){
                         }
                     ]
                 },
+                backgroundColor:"rgb(0, 204, 0, 0.2)",
                 options: {
                     scale: {
                         ticks: {
                             beginAtZero: true,
-                            max:255
+                            max:250
+                        },
+                        pointLabels:{
+                            fontSize: 15
                         }
                     }
                 }
@@ -108,5 +123,21 @@ app.controller('pokeMainController', function($scope, $http, $mdDialog){
             $scope.status = 'You cancelled the dialog.';
         });
     };
+
+    function showSimpleToast(message) {
+        desiredLocation = {
+            bottom: false,
+            top: true,
+            left: false,
+            right: true
+        }
+
+        $mdToast.show(
+            $mdToast.simple()
+                .textContent(message)
+                .position("top right")
+                .hideDelay(3000)
+        );
+    }
 
 });
