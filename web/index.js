@@ -57,7 +57,13 @@ app.controller('pokeMainController', function($scope, $http, $mdDialog, $mdToast
             $scope.inParty = inParty;
             $scope.index = index;
 
-            
+            $scope.type1 = pokemon.types.find(t => t.slot === 1).type.name;
+            let type2 = pokemon.types.find(t => t.slot === 2);
+            $scope.type2 = type2 ? type2.type.name : null;
+
+            $scope.type1Style = { backgroundColor: PokeTypes.colors[$scope.type1], color: 'black'};
+            $scope.type2Style = { backgroundColor: type2 ? PokeTypes.colors[$scope.type2] : null, color: 'black'};
+
             $scope.hide = function() {
                 $mdDialog.hide();
             };
