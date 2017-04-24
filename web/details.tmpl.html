@@ -30,7 +30,7 @@
                 <md-tab label="Moves List">
                     <md-toolbar class="md-theme-light">
                         <h2 class="md-toolbar-tools">
-                            <span>{{pokemon.name | capitalize}}'s Moves</span>
+                            <span>{{pokemon.name | title}}'s Moves</span>
                         </h2>
                         <input type=text
                     </md-toolbar>
@@ -42,7 +42,7 @@
                         <md-list>
                             <md-list-item class="md-3-line" ng-repeat="move in pokemon.moves| orderBy: '-move.name': true | filter: {move: {name: moveFilterText}}">
                                 <div class="md-list-item-text">
-                                    <h3>{{move.move.name}}</h3>
+                                    <h3>{{ move.move.name | title }}</h3>
                                 </div>
                                 <md-button class="md-secondary" ng-click="alert('testing')" >Details</md-button>
                                 <md-divider ng-if="!$last"></md-divider>
@@ -54,38 +54,17 @@
                     <md-content class="md-padding">
                         <div layout='column'>
                             <br><br>
-                            <md-input-container class="md-block" flex-gt-sm>
-                                <label>First Move</label>
-                                <md-select ng-model="pokemon.move1" ng-change="saveState()">
+
+                            <!-- Move Selection List -->
+                            <md-input-container class="md-block" flex-gt-sm ng-repeat="i in [1,2,3,4]">
+                                <label>Move {{i}}</label>
+                                <md-select ng-model="pokemon['move' + i]" ng-change="saveState()">
                                     <md-option ng-repeat="move in pokemon.moves | orderBy: '-move.name': true" value="{{move.move.name}}">
-                                        {{move.move.name}}
+                                        {{ move.move.name | title }}
                                     </md-option>
                                 </md-select>
                             </md-input-container>
-                            <md-input-container class="md-block" flex-gt-sm>
-                                <label>Second Move</label>
-                                <md-select ng-model="pokemon.move2"  ng-change="saveState()">
-                                    <md-option ng-repeat="move in pokemon.moves | orderBy: '-move.name': true" value="{{move.move.name}}">
-                                        {{move.move.name}}
-                                    </md-option>
-                                </md-select>
-                            </md-input-container>
-                            <md-input-container class="md-block" flex-gt-sm>
-                                <label>Third Move</label>
-                                <md-select ng-model="pokemon.move3" ng-change="saveState()">
-                                    <md-option ng-repeat="move in pokemon.moves | orderBy: '-move.name': true" value="{{move.move.name}}">
-                                        {{move.move.name}}
-                                    </md-option>
-                                </md-select>
-                            </md-input-container>
-                            <md-input-container class="md-block" flex-gt-sm>
-                            <label>Fourth Move</label>
-                                <md-select ng-model="pokemon.move4"  ng-change="saveState()">
-                                    <md-option ng-repeat="move in pokemon.moves | orderBy: '-move.name': true" value="{{move.move.name}}">
-                                        {{move.move.name}}
-                                    </md-option>
-                                </md-select>
-                            </md-input-container>
+
                         </div>
                     </md-content>
                 </md-tab>

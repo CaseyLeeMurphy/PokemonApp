@@ -39,7 +39,7 @@
             </div>
         </form>
         
-        <!--<pre>{{ stagedPokemon.types | json }}</pre>-->
+        <pre>{{ stagedPokemon.stats | json }}</pre>
 
         <div ng-show="stagedPokemon" layout="row">
             <md-card style="min-width: 350px; min-height: 200px">
@@ -73,12 +73,12 @@
                     <br></br>
                     <div layout="row">
                         <div layout="column" flex="50">
-                            <md-button ng-show="pokemon.move1" >{{pokemon.move1}}</md-button>
-                            <md-button ng-show="pokemon.move2" >{{pokemon.move2}}</md-button>
+                            <md-button ng-show="pokemon.move1" >{{ pokemon.move1 | title }}</md-button>
+                            <md-button ng-show="pokemon.move2" >{{ pokemon.move2 | title }}</md-button>
                         </div>
                         <div layout="column" flex="50">
-                            <md-button ng-show="pokemon.move3" >{{pokemon.move3}}</md-button>
-                            <md-button ng-show="pokemon.move4" >{{pokemon.move4}}</md-button>
+                            <md-button ng-show="pokemon.move3" >{{ pokemon.move3 | title }}</md-button>
+                            <md-button ng-show="pokemon.move4" >{{ pokemon.move4 | title }}</md-button>
                         </div>
                     </div>
                     <!--<span class="md-subhead">Large</span>-->

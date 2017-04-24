@@ -6,6 +6,12 @@ app.filter('capitalize', function() {
       return (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
     }
 });
+app.filter('title', function () {
+    return function(input) {
+        if (typeof input !== 'string' || input.length === 0) return input;
+        return input.split('-').map(s => s[0].toUpperCase() + s.slice(1)).join(' ');
+    }
+});
 app.controller('pokeMainController', function($scope, $http, $mdDialog, $mdToast){
     try {
         $scope.teamMembers = (typeof localStorage.getItem("teamMembers")) === "string" ? JSON.parse(localStorage.getItem("teamMembers")) : [];
@@ -110,13 +116,21 @@ app.controller('pokeMainController', function($scope, $http, $mdDialog, $mdToast
         }
 
         function showStatsChart() {
+            const stats = ['hp', 'attack', 'defense', 'speed', 'special-defense', 'special-attack'];
+            const labels = ['HP', 'Attack', 'Defense', 'Speed', 'Sp. Def', 'Sp. Atk'];
+            // let statsLabels = pokemon.stats.map((singleStat) => (singleStat.stat.name));
+            console.log(pokemon.stats);
+            let data = stats.map((stat) => {
+                console.log(stat);
+                let statObj = pokemon.stats.find(s => s.stat.name === stat);
+                return statObj.base_stat;
+            });
+
             let ctx = document.getElementById('stats-chart');
-            let statsLabels = pokemon.stats.map((singleStat) => (singleStat.stat.name));
-            let statsData = pokemon.stats.map((singleStat) => (singleStat.base_stat));
             let statsChart = new Chart(ctx, {
                 type: 'radar',
                 data: {
-                    labels: statsLabels,
+                    labels,
                     datasets: [
                         {
                             label: "Stats",
@@ -126,7 +140,7 @@ app.controller('pokeMainController', function($scope, $http, $mdDialog, $mdToast
                             pointBorderColor: "#fff",
                             pointHoverBackgroundColor: "#fff",
                             pointHoverBorderColor: "rgba(179,181,198,1)",
-                            data: statsData
+                            data
                         }
                     ]
                 },
@@ -138,7 +152,7 @@ app.controller('pokeMainController', function($scope, $http, $mdDialog, $mdToast
                     scale: {
                         ticks: {
                             beginAtZero: true,
-                            max:250
+                            max:255
                         },
                         pointLabels:{
                             fontSize: 15
