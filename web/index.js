@@ -1,17 +1,62 @@
 // ------------------------------ Declare global variables -------------------------------
 // ---------------------------------------------------------------------------------------
 var app = angular.module('pokemonApp', ['ngMaterial', 'ngAnimate']);
+
+function styleForType(type) {
+    return { backgroundColor: PokeTypes.colors[type], color: 'black'}
+}
+
 app.filter('capitalize', function() {
     return function(input) {
       return (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
     }
 });
+
 app.filter('title', function () {
     return function(input) {
         if (typeof input !== 'string' || input.length === 0) return input;
         return input.split('-').map(s => s[0].toUpperCase() + s.slice(1)).join(' ');
     }
 });
+
+app.directive('moveList', function () {
+    return {
+        restrict: 'E',
+        templateUrl: 'movelist.tmpl.html',
+        scope: {
+            pokemon: '='
+        },
+        controller: ['$scope', '$http', function($scope, $http) {
+            $scope.details = {};
+            $scope.styleForType = styleForType;
+
+            function fetchDetails(moveName) {
+                $http.get(`/api/v1/move/${moveName}`).then(
+                    function (result) {
+                        $scope.details[moveName].data = result.data;
+                    },
+                    function (error) {
+
+                    });
+            }
+
+            $scope.toggleShowDetails = function(moveName) {
+                if (!$scope.details[moveName]) {
+                    $scope.details[moveName] = { show: true };
+                    fetchDetails(moveName);
+                    return;
+                }
+
+                $scope.details[moveName].show = !$scope.details[moveName].show;
+            };
+
+            $scope.isShowingDetails = function(moveName) {
+                return $scope.details[moveName] && $scope.details[moveName].show;
+            };
+        }]
+    };
+});
+
 app.controller('pokeMainController', function($scope, $http, $mdDialog, $mdToast){
     try {
         $scope.teamMembers = (typeof localStorage.getItem("teamMembers")) === "string" ? JSON.parse(localStorage.getItem("teamMembers")) : [];
@@ -108,38 +153,20 @@ app.controller('pokeMainController', function($scope, $http, $mdDialog, $mdToast
 
             $scope.saveState = function() {
                 localStorage.setItem("teamMembers", JSON.stringify(currentParty));
-            }
+            };
 
             $scope.alert = function(message) {
                 alert(message);
-            }
+            };
 
-            $scope.toggleShowDetails = function(showBool, moveItem, isLoading) {
-                isLoading = true;
-
-                $http.get('api/v1/move/' + moveItem.name.toLowerCase()).then(function(result) {
-                    moveItem.details = result.data;
-                    isLoading = false;
-                    showBool = true;
-                },function(err) {
-                    showSimpleToast("There was a problem getting the move informaiton");
-                    isLoading = false;
-                    showBool = false;
-                })
-            }
-
-            $scope.getStyleFromType = function(moveType) {
-                return { backgroundColor: PokeTypes.colors[moveType], color: 'black'}
-            }
+            $scope.getStyleFromType = styleForType;
         }
 
         function showStatsChart() {
             const stats = ['hp', 'attack', 'defense', 'speed', 'special-defense', 'special-attack'];
             const labels = ['HP', 'Attack', 'Defense', 'Speed', 'Sp. Def', 'Sp. Atk'];
-            // let statsLabels = pokemon.stats.map((singleStat) => (singleStat.stat.name));
-            console.log(pokemon.stats);
+
             let data = stats.map((stat) => {
-                console.log(stat);
                 let statObj = pokemon.stats.find(s => s.stat.name === stat);
                 return statObj.base_stat;
             });

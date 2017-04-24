@@ -1,0 +1,23 @@
+<md-content class="md-padding">
+    <md-input-container class="md-block" flex-gt-sm>
+        <label>Filter By</label>
+        <input ng-model="moveFilterText">
+    </md-input-container>
+    <md-list>
+        <md-list-item class="md-3-line" ng-repeat="move in pokemon.moves | orderBy: '-move.name': true | filter: {move: {name: moveFilterText}}">
+            <div class="md-list-item-text">
+                <h3>{{ move.move.name | title }}</h3>
+                <br>
+                <div ng-show="isShowingDetails(move.move.name)">
+                    <!--<md-progress-circular md-mode="indeterminate" ng-disabled="!move.isLoading" class="md-accent" md-diameter="35"></md-progress-circular>-->
+                    <md-button class="type-button" ng-style="styleForType(details[move.move.name].data.type.name)" disabled>{{details[move.move.name].data.type.name}}</md-button>
+                    <md-button class="type-button" disabled>{{details[move.move.name].data.damage_class.name}}</md-button>
+                    <p>Power {{details[move.move.name].data.power}} Accuracy {{details[move.move.name].data.accuracy}}</p>
+                </div>
+                <br>
+            </div>
+            <md-button class="md-secondary" ng-click="toggleShowDetails(move.move.name)" >Details</md-button>
+            <md-divider ng-if="!$last"></md-divider>
+        </md-list-item>
+    </md-list>
+</md-content>

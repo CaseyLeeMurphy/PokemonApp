@@ -15,7 +15,7 @@
 <body ng-app="pokemonApp" ng-controller="pokeMainController">
     <div layout="column">
         <md-toolbar>
-            <div class="md-toolbar-tools"> 
+            <div class="md-toolbar-tools">
                 <h2>Pokemon Team Builder</h2>
                 <md-button href="/index.html">Home</md-button>
             </div>
@@ -25,9 +25,9 @@
             <div layout="row" layout-align="start start">
                 <md-autocomplete class="autocomplete"
                     flex='30'
-                    md-selected-item="selectedPokemon" 
-                    md-search-text="searchText" 
-                    md-items="pokemon in getMatches(searchText)" 
+                    md-selected-item="selectedPokemon"
+                    md-search-text="searchText"
+                    md-items="pokemon in getMatches(searchText)"
                     md-item-text="pokemon"
                     placeholder="Enter pokemon name or ID">
                     <span>{{pokemon}}</span>
@@ -38,8 +38,9 @@
                 </div>
             </div>
         </form>
-        
-        <pre>{{ stagedPokemon.stats | json }}</pre>
+
+        <move-list></move-list>
+        <!--<pre>{{ stagedPokemon.stats | json }}</pre>-->
 
         <div ng-show="stagedPokemon" layout="row">
             <md-card style="min-width: 350px; min-height: 200px">
