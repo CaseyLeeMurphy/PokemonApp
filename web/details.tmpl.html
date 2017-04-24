@@ -40,16 +40,19 @@
                             <input ng-model="moveFilterText">
                         </md-input-container>
                         <md-list>
-                            <md-list-item class="md-3-line" ng-repeat="move in pokemon.moves| orderBy: '-move.name': true | filter: {move: {name: moveFilterText}}" layout="column">
+                            <md-list-item class="md-3-line" ng-repeat="move in pokemon.moves| orderBy: '-move.name': true | filter: {move: {name: moveFilterText}}">
                                 <div class="md-list-item-text">
                                     <h3>{{ move.move.name | title }}</h3>
+                                    <br>
+                                    <div ng-show="move.showDetails">
+                                        <md-progress-circular md-mode="indeterminate" ng-disabled="!move.isLoading" class="md-accent" md-diameter="35"></md-progress-circular>
+                                        <md-button class="type-button" ng-style="getStyleFromType('fire')" disabled>{{move.move.details.type.name}}</md-button>
+                                        <md-button class="type-button" disabled>{{move.move.details.damage_class.name}}</md-button>
+                                        <p>Power {{move.move.details.power}} Accuracy {{move.move.details.accuracy}}</p>
+                                    </div>
+                                    <br>
                                 </div>
-                                <div>
-                                    <md-button class="type-button" ng-style="getStyleFromType('fire')" disabled>Ember</md-button>
-                                    <md-button class="type-button" disabled>Special</md-button>
-                                    <p>Power 40     Accuracy 100</p>
-                                </div>
-                                <md-button class="md-secondary" ng-click="toggleShowDetails(move.showDetails)" >Details</md-button>
+                                <md-button class="md-secondary" ng-click="toggleShowDetails(move.showDetails, move.move, move.isLoading)" >Details</md-button>
                                 <md-divider ng-if="!$last"></md-divider>
                             </md-list-item>
                         </md-list>

@@ -114,12 +114,18 @@ app.controller('pokeMainController', function($scope, $http, $mdDialog, $mdToast
                 alert(message);
             }
 
-            $scope.toggleShowDetails = function(showBool) {
-                if (showBool) {
-                    showBool = false;
-                } else {
+            $scope.toggleShowDetails = function(showBool, moveItem, isLoading) {
+                isLoading = true;
+
+                $http.get('api/v1/move/' + moveItem.name.toLowerCase()).then(function(result) {
+                    moveItem.details = result.data;
+                    isLoading = false;
                     showBool = true;
-                }
+                },function(err) {
+                    showSimpleToast("There was a problem getting the move informaiton");
+                    isLoading = false;
+                    showBool = false;
+                })
             }
 
             $scope.getStyleFromType = function(moveType) {
