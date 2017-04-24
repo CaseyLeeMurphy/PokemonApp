@@ -30,7 +30,7 @@ router.get("/api/v1/pokemon/:id", function(req, res) {
 
     P.getPokemonByName(id)
     .then(function(response) {
-      res.status(201).send(response);
+      res.send(response);
     })
     .catch(function(error) {
       res.status(500).send(error);
@@ -38,7 +38,17 @@ router.get("/api/v1/pokemon/:id", function(req, res) {
 });
 
 router.get("/api/v1/pokemon", function(req, res) {
-    res.status(201).send(pokemonList);
+    res.send(pokemonList);
+});
+
+router.get("/api/v1/move/:id", function(req, res) {
+    P.getMoveByName(req.params.id)
+    .then(function(response) {
+        res.send(response);
+    })
+    .catch(function(error) {
+        res.status(500).send(error);
+    });
 });
 
 // --------------------------------------- Update/Put ---------------------------------------------

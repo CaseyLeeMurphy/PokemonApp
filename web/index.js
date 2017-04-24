@@ -113,6 +113,18 @@ app.controller('pokeMainController', function($scope, $http, $mdDialog, $mdToast
             $scope.alert = function(message) {
                 alert(message);
             }
+
+            $scope.toggleShowDetails = function(showBool) {
+                if (showBool) {
+                    showBool = false;
+                } else {
+                    showBool = true;
+                }
+            }
+
+            $scope.getStyleFromType = function(moveType) {
+                return { backgroundColor: PokeTypes.colors[moveType], color: 'black'}
+            }
         }
 
         function showStatsChart() {
