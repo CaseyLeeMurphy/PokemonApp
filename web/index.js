@@ -66,6 +66,8 @@ app.directive('moveList', function () {
 });
 
 app.controller('pokeMainController', function($scope, $http, $mdDialog, $mdToast){
+    
+    // Get the current team from the local storage if available
     try {
         $scope.teamMembers = (typeof localStorage.getItem("teamMembers")) === "string" ? JSON.parse(localStorage.getItem("teamMembers")) : [];
     } catch (err) {
@@ -82,6 +84,7 @@ app.controller('pokeMainController', function($scope, $http, $mdDialog, $mdToast
             let pokemon = result.data;
             let sprites = pokemon.sprites;
             
+            // Change the URL for the sprites image to use our local server instead of the PokeAPI
             Object.keys(sprites).map((key) => {
                 let value = sprites[key];
                 if (typeof value === 'string')
@@ -96,6 +99,7 @@ app.controller('pokeMainController', function($scope, $http, $mdDialog, $mdToast
         })
     };
 
+    // Get a list of all pokemon names to be used for autocomplete
     $http.get('api/v1/pokemon').then(function(response) {
         $scope.pokemonNames = response.data.pokemon.map(singlePokemon => singlePokemon.name);
     }, function() {
@@ -103,6 +107,8 @@ app.controller('pokeMainController', function($scope, $http, $mdDialog, $mdToast
     });
 
     $scope.addToParty = function(pokemonDetails) {
+        // If there are less than 6 members in the team, add the staged pokemon to the team list
+        // After adding to the team list, store the team list into local storage 
         if ($scope.teamMembers.length < $scope.MAX_POKEMON) {
             $scope.teamMembers.push(JSON.parse(JSON.stringify(pokemonDetails)));
             localStorage.setItem("teamMembers", JSON.stringify($scope.teamMembers));
@@ -132,8 +138,8 @@ app.controller('pokeMainController', function($scope, $http, $mdDialog, $mdToast
             $scope.type2 = type2 ? type2.type.name : null;
 
             // Get style for pokemon type
-            $scope.type1Style = { backgroundColor: PokeTypes.colors[$scope.type1], color: 'black'};
-            $scope.type2Style = { backgroundColor: type2 ? PokeTypes.colors[$scope.type2] : null, color: 'black'};
+            $scope.type1Style = styleForType($scope.type1);
+            $scope.type2Style = type2 ? styleForType($scope.type2) : null;
             
             // Get weaknesses
             let strengthAndWeaknesses = PokeTypes.getWeaknessList($scope.type1, $scope.type2);

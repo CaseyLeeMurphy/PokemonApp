@@ -3,15 +3,7 @@ const express = require('express');
 const Pokedex = require('pokedex-promise-v2');
 const pokemonList = require('../data/pokemonList.json');
 
-// var options = {
-//   protocol: 'http',
-//   hostName: 'pokeapi.co',
-//   versionPath: '/api/v2/',
-//   cacheLimit: 100 * 1000, // 100s
-//   tiemout: 5 * 1000 // 5s
-// }
-// const P = new Pokedex(options);
-
+// Initialize the pokedex. This is used for caching and to provide move immediate results
 const P = new Pokedex();
 var router = express.Router();
 module.exports = router;
