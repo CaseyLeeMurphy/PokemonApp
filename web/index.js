@@ -12,7 +12,7 @@ app.filter('capitalize', function() {
     }
 });
 
-app.filter('title', function () {
+app.filter('title', function() {
     return function(input) {
         if (typeof input !== 'string' || input.length === 0) return input;
         return input.split('-').map(s => s[0].toUpperCase() + s.slice(1)).join(' ');
@@ -138,9 +138,9 @@ app.controller('pokeMainController', function($scope, $http, $mdDialog, $mdToast
             // Get weaknesses
             let strengthAndWeaknesses = PokeTypes.getWeaknessList($scope.type1, $scope.type2);
             $scope.weaknesses = Object.keys(strengthAndWeaknesses)
-                .filter((key) => strengthAndWeaknesses[key] === "weak")
+                .filter((key) => strengthAndWeaknesses[key] === "weak" || strengthAndWeaknesses[key] === "dbl weak")
                 .map(key => ({
-                    type: key, 
+                    type: strengthAndWeaknesses[key].replace("weak", "") + key, 
                     style: {
                         backgroundColor: PokeTypes.colors[key], 
                         color: 'black'
