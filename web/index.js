@@ -19,6 +19,14 @@ app.filter('title', function () {
     }
 });
 
+app.filter('emptyToDashes', function() {
+    return function(input) {
+        if (input === null) return " -- ";
+
+        return input;
+    }
+})
+
 app.directive('moveList', function () {
     return {
         restrict: 'E',

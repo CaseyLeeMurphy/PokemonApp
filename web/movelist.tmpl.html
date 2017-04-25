@@ -12,7 +12,7 @@
                     <!--<md-progress-circular md-mode="indeterminate" ng-disabled="!move.isLoading" class="md-accent" md-diameter="35"></md-progress-circular>-->
                     <md-button class="type-button" ng-style="styleForType(details[move.move.name].data.type.name)" disabled>{{details[move.move.name].data.type.name}}</md-button>
                     <md-button class="type-button" disabled>{{details[move.move.name].data.damage_class.name}}</md-button>
-                    <p>Power {{details[move.move.name].data.power}} Accuracy {{details[move.move.name].data.accuracy}}</p>
+                    <p>Power {{details[move.move.name].data.power | emptyToDashes}} Accuracy {{details[move.move.name].data.accuracy | emptyToDashes}}</p>
                 </div>
                 <br>
             </div>
