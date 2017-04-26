@@ -64,7 +64,8 @@
                 flex='90'
                 flex-gt-sm="30"
                 md-theme-watch 
-                ng-repeat="pokemon in teamMembers track by $index">
+                ng-repeat="pokemon in teamMembers track by $index"
+                style="min-width:400px">
                 <md-card-title>
                 <md-card-title-text>
                     <span class="md-headline">{{pokemon.name | uppercase}}</span>
