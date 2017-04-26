@@ -1,10 +1,12 @@
 ## CS 4690 - Pokemon Project
 
-TODO
+This is a project which originated from a love of pokemon, and the lack of similar resources available online. This project allows the user to look up any pokemon from any of the available pokemon games, and then construct a team of 6 members. Once members are picked, the user can look at the details for each pokemon which include types, weaknesses, stats, and all of the possible moves. Users can also select the moves they'd like each pokemon to have (up to 4). 
 
 ## But why?
 
-TODO
+First and foremost, this project came about because pokemon are AWESOME, and we love them. Secondly, this project fulfilled the requirements for a final project within our CS 4690 Class. It gave us an opportunity to practice some the of the skills and implement some of the knowledge we gained in this class in a way that was fun for us personally. 
+
+Hopefully, if you happened upon this project while cruising across github, you'll get as much enjoyment out of this project as we did.  
 
 ## Installation
 
@@ -18,15 +20,11 @@ Step 5: Type "npm start" to boot up the app.
 
 All done! The server will display to the console that it is listening. Head to your browser and type "localhost:3000" in the URL. It should look like this:
 
-TODO
-## API Reference
-
-Please head to the following link for an API Reference guide:
-TODO
+![](https://github.com/CaseyLeeMurphy/PokemonApp/blob/master/mainScreen.png)
 
 ## Copyright
 
-All of the code was written by Daniel & Casey Murphy. Although the code is being posted to github in a very open environment, I will not be held responsible for any malicious copying of this data.
+All of the code was written by Daniel Clark & Casey Murphy. Although the code is being posted to github in a very open environment, I will not be held responsible for any malicious copying of this data.
 This code is left here as a reference for others on the path to learning and is not intented to help you get an "A" by simply copy/pasting.
 
 Cheers!
