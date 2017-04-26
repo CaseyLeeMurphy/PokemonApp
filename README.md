@@ -18,7 +18,7 @@ Step 3: Browse to location on local drive where repository was cloned in your te
 
 Step 5: Type "npm start" to boot up the app. 
 
-All done! The server will display to the console that it is listening. Head to your browser and type "localhost:3000" in the URL. It should look like this:
+All done! The server will display to the console that it is listening. Head to your browser and type "localhost:3000" in the URL. After you look up some pokemon and add them to your team, it should look like this:
 
 ![](https://github.com/CaseyLeeMurphy/PokemonApp/blob/master/mainScreen.png)
 
